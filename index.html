@@ -83,6 +83,20 @@
       position:absolute;right:18px;bottom:18px;opacity:.08;pointer-events:none;
       font-size:92px
     }
+    
+    .company-logo{
+      text-align:center;
+      margin-top:24px;
+      opacity:1.0;
+    }
+    .company-logo img{
+      max-width:100%;
+      height:auto;
+      transition:opacity 0.2s ease;
+    }
+    .company-logo a:hover img{
+      opacity:0.8;
+    }
   </style>
 </head>
 <body>
@@ -109,37 +123,12 @@
 
     <p class="tip">若未自動顯示 App Clip 卡片，請以 Safari 開啟本頁。iOS 14+ 以上支援。</p>
     <div class="hero">🗳️</div>
+    
+    <div class="company-logo">
+      <a href="https://www.instagram.com/yinullspace/" target="_blank" rel="noopener">
+        <img src="Assets/instafilterlogo.png" alt="Company Logo" width="180" height="60">
+      </a>
+    </div>
   </main>
-
-  <script>
-    // 检测是否为iOS设备
-    function isIOS() {
-      return /iPad|iPhone|iPod/.test(navigator.userAgent) || 
-             (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    }
-
-    // 检测是否为Safari浏览器
-    function isSafari() {
-      return /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
-    }
-
-    // 如果是iOS设备，自动尝试打开App Clip
-    if (isIOS()) {
-      // 延迟一点时间让页面完全加载
-      setTimeout(() => {
-        const appClipUrl = 'https://appclip.apple.com/id?p=com.hongyinull.votenow.Clip';
-        
-        // 如果不是Safari，尝试强制在Safari中打开
-        if (!isSafari()) {
-          // 使用Safari的URL scheme来强制打开
-          const safariUrl = `x-web-search://?${encodeURIComponent(appClipUrl)}`;
-          window.location.href = safariUrl;
-        } else {
-          // 如果是Safari，直接打开App Clip
-          window.location.href = appClipUrl;
-        }
-      }, 1000);
-    }
-  </script>
 </body>
 </html>
