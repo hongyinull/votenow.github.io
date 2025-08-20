@@ -106,7 +106,13 @@
     if (isIOS()) {
       // 延迟一点时间让页面完全加载
       setTimeout(() => {
-        window.location.href = 'https://appclip.apple.com/id?p=com.hongyinull.votenow.Clip';
+        // 创建一个隐藏的链接并模拟点击，这样更接近用户交互
+        const link = document.createElement('a');
+        link.href = 'https://appclip.apple.com/id?p=com.hongyinull.votenow.Clip';
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
       }, 1000);
     }
   </script>
