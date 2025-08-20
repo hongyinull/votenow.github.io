@@ -89,11 +89,26 @@
 
     <div class="btn-row">
       <a class="btn btn-dark" href="https://pse.is/yinulldonate" target="_blank" rel="noopener">抖內支持</a>
-      <a class="btn btn-orange" href="https://www.instagram.com/yinullspace/" target="_blank" rel="noopener">關注 IG</a>
     </div>
 
     <p class="tip">若未自動顯示 App Clip 卡片，請以 Safari 開啟本頁。iOS 14+ 以上支援。</p>
     <div class="hero">🗳️</div>
   </main>
+
+  <script>
+    // 检测是否为iOS设备
+    function isIOS() {
+      return /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+             (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    }
+
+    // 如果是iOS设备，自动尝试打开App Clip
+    if (isIOS()) {
+      // 延迟一点时间让页面完全加载
+      setTimeout(() => {
+        window.location.href = 'https://appclip.apple.com/id?p=com.hongyinull.votenow.Clip';
+      }, 1000);
+    }
+  </script>
 </body>
 </html>
