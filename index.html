@@ -96,11 +96,11 @@
     <div class="subtitle">投票點地圖、開票進度、投票須知，一手掌握！</div>
 
     <a class="btn btn-primary" href="https://appclip.apple.com/id?p=com.hongyinull.votenow.Clip">
-      <span>投開票點地圖</span>
+      <span>開啟！投票點地圖</span>
     </a>
 
     <a class="btn btn-orange" href="https://apps.apple.com/app/id6749026146" target="_blank" rel="noopener">
-      <span>下載 App</span>
+      <span>AppStore下載</span>
     </a>
 
     <div class="btn-row">
@@ -118,23 +118,25 @@
              (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
     }
 
+    // 检测是否为Safari浏览器
+    function isSafari() {
+      return /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
+    }
+
     // 如果是iOS设备，自动尝试打开App Clip
     if (isIOS()) {
       // 延迟一点时间让页面完全加载
       setTimeout(() => {
-        // 使用window.open来触发App Clip，这样更接近用户交互
         const appClipUrl = 'https://appclip.apple.com/id?p=com.hongyinull.votenow.Clip';
-        const newWindow = window.open(appClipUrl, '_self');
         
-        // 如果window.open被阻止，则尝试其他方法
-        if (!newWindow) {
-          // 创建一个隐藏的按钮并模拟点击
-          const hiddenBtn = document.createElement('button');
-          hiddenBtn.style.display = 'none';
-          hiddenBtn.onclick = () => window.location.href = appClipUrl;
-          document.body.appendChild(hiddenBtn);
-          hiddenBtn.click();
-          document.body.removeChild(hiddenBtn);
+        // 如果不是Safari，尝试强制在Safari中打开
+        if (!isSafari()) {
+          // 使用Safari的URL scheme来强制打开
+          const safariUrl = `x-web-search://?${encodeURIComponent(appClipUrl)}`;
+          window.location.href = safariUrl;
+        } else {
+          // 如果是Safari，直接打开App Clip
+          window.location.href = appClipUrl;
         }
       }, 1000);
     }
