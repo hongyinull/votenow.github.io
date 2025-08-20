@@ -35,19 +35,31 @@
       text-align:center;
     }
     .app-icon{
-      width:80px;
-      height:80px;
+      width:120px;
+      height:120px;
       background:#fff;
-      border-radius:16px;
+      border-radius:24px;
       display:flex;
       align-items:center;
       justify-content:center;
-      box-shadow:0 4px 12px rgba(0,0,0,.1);
+      box-shadow:0 8px 24px rgba(0,0,0,.1), 0 0 60px rgba(238,32,42,.3);
       margin-bottom:16px;
+      position:relative;
+    }
+    .app-icon::before{
+      content:'';
+      position:absolute;
+      top:-20px;
+      left:-20px;
+      right:-20px;
+      bottom:-20px;
+      background:radial-gradient(circle, rgba(238,32,42,.2) 0%, transparent 70%);
+      border-radius:40px;
+      z-index:-1;
     }
     .app-icon img{
-      width:60px;
-      height:60px;
+      width:90px;
+      height:90px;
       object-fit:contain;
     }
     h1{margin:0;font-size:32px;font-weight:800;letter-spacing:.3px}
@@ -56,14 +68,14 @@
     .btn{display:flex;align-items:center;justify-content:center;gap:.6rem;
       width:100%; height:56px; border:none; border-radius: var(--radius);
       font-size:18px;font-weight:700; cursor:pointer; text-decoration:none;
-      transition:transform .12s ease, box-shadow .12s ease;}
+      transition:transform .12s ease, box-shadow .12s ease; margin-bottom:12px;}
     .btn:active{transform:translateY(1px)}
     .btn-primary{background:var(--red);color:#fff;box-shadow:0 8px 18px rgba(238,32,42,.28)}
     .btn-primary:hover{box-shadow:0 10px 22px rgba(238,32,42,.34)}
 
     .btn-row{display:flex;gap:12px;margin-top:12px}
     .btn-dark{background:var(--dark);color:#fff}
-    .btn-orange{background:var(--orange);color:#fff}
+    .btn-orange{background:var(--dark);color:#fff}
 
     .tip{margin-top:14px;color:#555;font-size:14px;line-height:1.6}
 
@@ -84,7 +96,11 @@
     <div class="subtitle">投票點地圖、開票進度、投票須知，一手掌握！</div>
 
     <a class="btn btn-primary" href="https://appclip.apple.com/id?p=com.hongyinull.votenow.Clip">
-      <span>打開 App Clip</span>
+      <span>投開票點地圖</span>
+    </a>
+
+    <a class="btn btn-orange" href="https://apps.apple.com/app/id6749026146" target="_blank" rel="noopener">
+      <span>下載 App</span>
     </a>
 
     <div class="btn-row">
@@ -106,13 +122,20 @@
     if (isIOS()) {
       // 延迟一点时间让页面完全加载
       setTimeout(() => {
-        // 创建一个隐藏的链接并模拟点击，这样更接近用户交互
-        const link = document.createElement('a');
-        link.href = 'https://appclip.apple.com/id?p=com.hongyinull.votenow.Clip';
-        link.style.display = 'none';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        // 使用window.open来触发App Clip，这样更接近用户交互
+        const appClipUrl = 'https://appclip.apple.com/id?p=com.hongyinull.votenow.Clip';
+        const newWindow = window.open(appClipUrl, '_self');
+        
+        // 如果window.open被阻止，则尝试其他方法
+        if (!newWindow) {
+          // 创建一个隐藏的按钮并模拟点击
+          const hiddenBtn = document.createElement('button');
+          hiddenBtn.style.display = 'none';
+          hiddenBtn.onclick = () => window.location.href = appClipUrl;
+          document.body.appendChild(hiddenBtn);
+          hiddenBtn.click();
+          document.body.removeChild(hiddenBtn);
+        }
       }, 1000);
     }
   </script>
